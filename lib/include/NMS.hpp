@@ -4,6 +4,10 @@
 
 #include <cstdint>
 
+// Step 4: also build the bitonic sort variant (needs the 4 extra wrappers in
+// riscv_wrappers.hpp). Remove this line to build odd-even only.
+#define NMS_ENABLE_BITONIC
+
 namespace vec
 {
     // Vectorized educational NonMaxSuppression (RVV). boxes is [num_batches, spatial_dim, 4]
@@ -26,4 +30,23 @@ namespace vec
                           const float* score_threshold,
                           CenterPointBox center_point_box,
                           int64_t* selected_indices);
+
+    enum class NmsSort
+    {
+        ODD_EVEN,
+        BITONIC,
+    };
+
+    // Same as above, with an explicit sort method (odd-even vs bitonic comparison).
+    int NonMaxSuppression(const float* boxes,
+                          const float* scores,
+                          int num_batches,
+                          int num_classes,
+                          int spatial_dim,
+                          int64_t max_output_boxes_per_class,
+                          float iou_threshold,
+                          const float* score_threshold,
+                          CenterPointBox center_point_box,
+                          int64_t* selected_indices,
+                          NmsSort sort_method);
 }

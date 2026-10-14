@@ -270,4 +270,23 @@ namespace rvv
     {
         return __riscv_vmerge_vvm_f32m2(when_false, when_true, mask, vl);
     }
+        inline MaskF32M4 MaskF32EqualM4(F32M4 left, F32M4 right, size_t vl)
+    {
+        return __riscv_vmfeq_vv_f32m4_b8(left, right, vl);
+    }
+
+    inline MaskF32M4 MaskI32LessThanM4(I32M4 left, I32M4 right, size_t vl)
+    {
+        return __riscv_vmslt_vv_i32m4_b8(left, right, vl);
+    }
+
+    inline MaskF32M4 AndMaskM4(MaskF32M4 a, MaskF32M4 b, size_t vl)
+    {
+        return __riscv_vmand_mm_b8(a, b, vl);
+    }
+
+    inline MaskF32M4 OrMaskM4(MaskF32M4 a, MaskF32M4 b, size_t vl)
+    {
+        return __riscv_vmor_mm_b8(a, b, vl);
+    }
 }
